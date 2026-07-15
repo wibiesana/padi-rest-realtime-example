@@ -91,3 +91,9 @@ To test if real-time synchronization is working:
 3. Navigate to the **Posts Dashboard** or **Tags Dashboard**.
 4. Try creating, editing, or deleting a post in Browser A.
 5. Observe that Browser B immediately updates its grid and shows a notification pop-up without any manual page reload!
+
+---
+
+## 📖 Documentation
+For complete documentation on using the PADI REST API Framework, please visit our official website at:
+🔗 [PADI Software Documentation](https://padisoftware.my.id/)

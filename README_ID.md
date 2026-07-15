@@ -91,3 +91,9 @@ Untuk menguji apakah fitur sinkronisasi real-time berjalan dengan sukses:
 3. Masuk ke **Posts Dashboard** atau **Tags Dashboard**.
 4. Cobalah menambah, mengubah, atau menghapus postingan di browser A.
 5. Perhatikan bahwa browser B akan langsung memperbarui daftar data dan menampilkan notifikasi pop-up secara instan tanpa perlu me-refresh halaman!
+
+---
+
+## 📖 Dokumentasi
+Untuk dokumentasi lengkap mengenai penggunaan PADI REST API Framework, silakan kunjungi website resmi kami di:
+🔗 [PADI Software Documentation](https://padisoftware.my.id/)
