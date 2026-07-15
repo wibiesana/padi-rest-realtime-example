@@ -1,0 +1,12 @@
+vendor/
+.env
+storage/cache/*
+!storage/cache/.gitkeep
+*.log
+.DS_Store
+Thumbs.db
+server_dump.txt
+
+# Padi Sync Files
+VERSION
+sync-version.*

@@ -1,0 +1,33 @@
+<?php
+
+namespace App\Jobs;
+
+use Wibiesana\Padi\Core\Logger;
+use Wibiesana\Padi\Core\Email;
+
+class SendEmailJob
+{
+    /**
+     * Handle the job process.
+     * The Queue worker will call this method with the provided data.
+     */
+    public function handle(array $data): void
+    {
+        $to = $data['email'] ?? $data['to'] ?? null;
+        if (!$to) {
+            Logger::error("SendEmailJob failed: No recipient email provided");
+            return;
+        }
+        $subject = $data['subject'];
+        $body = $data['body'];
+
+        Logger::info("Job SendEmailJob started for: " . $to);
+
+        try {
+            Email::send($to, $subject, $body);
+            Logger::info("Job SendEmailJob completed for: " . $to);
+        } catch (\Throwable $e) {
+            Logger::warning("SendEmailJob skipped or failed: " . $e->getMessage());
+        }
+    }
+}

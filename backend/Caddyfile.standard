@@ -1,0 +1,42 @@
+{
+    # Global options
+    admin off
+    auto_https off
+    frankenphp
+    # Can be safely deleted if not using realtime:
+    order mercure after encode
+}
+
+# HTTP server - Standard Mode
+:8085 {
+    # Root directory
+    root * ./backend/public
+
+    # Enable Mercure Hub (Can be safely deleted if not using realtime)
+    mercure {
+        publisher_jwt "padi_mercure_publisher_secret_key_change_me_in_prod"
+        subscriber_jwt "padi_mercure_subscriber_secret_key_change_me_in_prod"
+        anonymous
+        cors_origins *
+    }
+
+    # Enable PHP (standard mode - no worker)
+    php_server
+
+    # Enable file server for static assets
+    file_server
+
+    # Rewrite all requests to index.php (excluding Mercure)
+    @notFile {
+        not file
+        not path /.well-known/mercure*
+    }
+    rewrite @notFile /index.php
+
+    # Logging
+    log {
+        output stdout
+        format console
+        level INFO
+    }
+}

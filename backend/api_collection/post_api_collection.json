@@ -1,0 +1,202 @@
+{
+    "info": {
+        "name": "Post API",
+        "description": "REST API endpoints for Post resource",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+        "_exporter_id": "0"
+    },
+    "item": [
+        {
+            "name": "Get All Posts (Paginated)",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{base_url}}/posts?page=1&per-page=25",
+                    "host": [
+                        "{{base_url}}"
+                    ],
+                    "path": [
+                        "",
+                        "posts"
+                    ],
+                    "query": [
+                        {
+                            "key": "page",
+                            "value": "1"
+                        },
+                        {
+                            "key": "per-page",
+                            "value": "25"
+                        }
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Search Posts",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{base_url}}/posts?search=sample",
+                    "host": [
+                        "{{base_url}}"
+                    ],
+                    "path": [
+                        "",
+                        "posts"
+                    ],
+                    "query": [
+                        {
+                            "key": "search",
+                            "value": "sample"
+                        }
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Get All Posts (No Pagination)",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{base_url}}/posts/all",
+                    "host": [
+                        "{{base_url}}"
+                    ],
+                    "path": [
+                        "",
+                        "posts",
+                        "all"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Get Single Post",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{base_url}}/posts/1",
+                    "host": [
+                        "{{base_url}}"
+                    ],
+                    "path": [
+                        "",
+                        "posts",
+                        "1"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Create Post",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    },
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"user_id\": 1,\n    \"title\": \"Sample Title\",\n    \"slug\": \"Sample Text\"\n}"
+                },
+                "url": {
+                    "raw": "{{base_url}}/posts",
+                    "host": [
+                        "{{base_url}}"
+                    ],
+                    "path": [
+                        "",
+                        "posts"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Update Post",
+            "request": {
+                "method": "PUT",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    },
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"user_id\": 1,\n    \"title\": \"Sample Title\",\n    \"slug\": \"Sample Text\"\n}"
+                },
+                "url": {
+                    "raw": "{{base_url}}/posts/1",
+                    "host": [
+                        "{{base_url}}"
+                    ],
+                    "path": [
+                        "",
+                        "posts",
+                        "1"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Delete Post",
+            "request": {
+                "method": "DELETE",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "{{base_url}}/posts/1",
+                    "host": [
+                        "{{base_url}}"
+                    ],
+                    "path": [
+                        "",
+                        "posts",
+                        "1"
+                    ]
+                }
+            },
+            "response": []
+        }
+    ],
+    "variable": [
+        {
+            "key": "base_url",
+            "value": "",
+            "type": "string"
+        },
+        {
+            "key": "token",
+            "value": "",
+            "type": "string"
+        }
+    ]
+}

@@ -1,0 +1,202 @@
+{
+    "info": {
+        "name": "Comment API",
+        "description": "REST API endpoints for Comment resource",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+        "_exporter_id": "0"
+    },
+    "item": [
+        {
+            "name": "Get All Comments (Paginated)",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{base_url}}/comments?page=1&per-page=25",
+                    "host": [
+                        "{{base_url}}"
+                    ],
+                    "path": [
+                        "",
+                        "comments"
+                    ],
+                    "query": [
+                        {
+                            "key": "page",
+                            "value": "1"
+                        },
+                        {
+                            "key": "per-page",
+                            "value": "25"
+                        }
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Search Comments",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{base_url}}/comments?search=sample",
+                    "host": [
+                        "{{base_url}}"
+                    ],
+                    "path": [
+                        "",
+                        "comments"
+                    ],
+                    "query": [
+                        {
+                            "key": "search",
+                            "value": "sample"
+                        }
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Get All Comments (No Pagination)",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{base_url}}/comments/all",
+                    "host": [
+                        "{{base_url}}"
+                    ],
+                    "path": [
+                        "",
+                        "comments",
+                        "all"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Get Single Comment",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{base_url}}/comments/1",
+                    "host": [
+                        "{{base_url}}"
+                    ],
+                    "path": [
+                        "",
+                        "comments",
+                        "1"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Create Comment",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    },
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"post_id\": 1,\n    \"user_id\": 1,\n    \"content\": \"This is sample content\"\n}"
+                },
+                "url": {
+                    "raw": "{{base_url}}/comments",
+                    "host": [
+                        "{{base_url}}"
+                    ],
+                    "path": [
+                        "",
+                        "comments"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Update Comment",
+            "request": {
+                "method": "PUT",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    },
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"post_id\": 1,\n    \"user_id\": 1,\n    \"content\": \"This is sample content\"\n}"
+                },
+                "url": {
+                    "raw": "{{base_url}}/comments/1",
+                    "host": [
+                        "{{base_url}}"
+                    ],
+                    "path": [
+                        "",
+                        "comments",
+                        "1"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Delete Comment",
+            "request": {
+                "method": "DELETE",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "{{base_url}}/comments/1",
+                    "host": [
+                        "{{base_url}}"
+                    ],
+                    "path": [
+                        "",
+                        "comments",
+                        "1"
+                    ]
+                }
+            },
+            "response": []
+        }
+    ],
+    "variable": [
+        {
+            "key": "base_url",
+            "value": "",
+            "type": "string"
+        },
+        {
+            "key": "token",
+            "value": "",
+            "type": "string"
+        }
+    ]
+}

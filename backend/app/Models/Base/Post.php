@@ -1,0 +1,94 @@
+<?php
+
+namespace App\Models\Base;
+
+use Wibiesana\Padi\Core\ActiveRecord;
+use Wibiesana\Padi\Core\ModelQuery;
+
+class Post extends ActiveRecord
+{
+    protected string $table = 'posts';
+    protected string|array $primaryKey = 'id';
+    
+    protected array $fillable = [
+        'user_id', 'title', 'slug', 'content', 'excerpt', 'featured_image', 'status', 'published_at', 'views'
+    ];
+    
+    protected array $hidden = [];
+
+    /**
+     * Audit fields detected: created_at, updated_at, created_by, updated_by
+     * These will be auto-populated by ActiveRecord
+     */
+    protected bool $useAudit = true;
+    
+    /**
+     * Timestamp format: 'datetime'
+     * 'datetime' = Y-m-d H:i:s (DATETIME/TIMESTAMP columns)
+     * 'unix' = integer timestamp (INT/BIGINT columns)
+     */
+    protected string $timestampFormat = 'datetime';
+
+
+    public function user()
+    {
+        return $this->belongsTo(\App\Models\User::class, 'user_id');
+    }
+
+    public function createdBy()
+    {
+        return $this->belongsTo(\App\Models\User::class, 'created_by');
+    }
+
+    public function updatedBy()
+    {
+        return $this->belongsTo(\App\Models\User::class, 'updated_by');
+    }
+
+    public function commentsBypost()
+    {
+        return $this->hasMany(\App\Models\Comment::class, 'post_id');
+    }
+
+    public function posttagBypost()
+    {
+        return $this->hasOne(\App\Models\PostTag::class, 'post_id');
+    }
+
+    /**
+     * Build global search conditions
+     * Searches all fillable fields + related table display columns
+     */
+    protected function buildSearchConditions(string $keyword): array
+    {
+        $conditions = ['OR'];
+
+        // Search all fillable fields from this table
+        foreach ($this->fillable as $field) {
+            $conditions[] = ["{$this->table}.{$field}", 'LIKE', $keyword];
+        }
+
+            // Search in related tables
+            $conditions[] = ['users.username', 'LIKE', $keyword];
+            $conditions[] = ['users_created_by.username', 'LIKE', $keyword];
+            $conditions[] = ['users_updated_by.username', 'LIKE', $keyword];
+
+        return $conditions;
+    }
+
+    /**
+     * Start a model-aware search query builder
+     */
+    public static function search(string $keyword): ModelQuery
+    {
+        $instance = new static();
+        $conditions = $instance->buildSearchConditions("%{$keyword}%");
+
+        return static::find()
+            ->select("{$instance->table}.*")
+            ->leftJoin('users AS users', 'posts.user_id = users.id')
+            ->leftJoin('users AS users_created_by', 'posts.created_by = users_created_by.id')
+            ->leftJoin('users AS users_updated_by', 'posts.updated_by = users_updated_by.id')
+            ->where($conditions);
+    }
+}

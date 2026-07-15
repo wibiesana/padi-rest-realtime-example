@@ -1,0 +1,1 @@
+php backend/scripts/queue-worker.php
