@@ -17,6 +17,7 @@
         publisher_jwt "padi_mercure_publisher_secret_key_change_me_in_prod"
         subscriber_jwt "padi_mercure_subscriber_secret_key_change_me_in_prod"
         anonymous
+        cors_origins *
         transport bolt {
             path {$MERCURE_DB_PATH:mercure.db}
         }
@@ -28,6 +29,7 @@
     # Rewrite all requests to index.php
     @notFile {
         not file
+        not path /.well-known/mercure*
     }
     rewrite @notFile /index.php
 

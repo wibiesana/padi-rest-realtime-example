@@ -4,8 +4,7 @@ namespace App\Models\Base;
 
 use Wibiesana\Padi\Core\ActiveRecord;
 use Wibiesana\Padi\Core\ModelQuery;
-use Wibiesana\Padi\Core\Queue;
-use App\Jobs\BroadcastRealtimeJob;
+use Wibiesana\Padi\Core\Realtime;
 
 class Chat extends ActiveRecord
 {
@@ -94,32 +93,26 @@ class Chat extends ActiveRecord
 
     /**
      * Lifecycle Hook: Called after save (create/update)
-     * Automatically broadcasts changes via background queue.
+     * Automatically broadcasts changes via Mercure real-time hub.
      */
     protected function afterSave(bool $insert, array $data): void
     {
         $event = $insert ? 'chat_created' : 'chat_updated';
-        Queue::push(BroadcastRealtimeJob::class, [
-            'topic' => 'chats',
-            'data' => [
-                'event' => $event,
-                'data'  => $data
-            ]
+        Realtime::publish('chats', [
+            'event' => $event,
+            'data'  => $data
         ]);
     }
 
     /**
      * Lifecycle Hook: Called after delete
-     * Automatically broadcasts deletion via background queue.
+     * Automatically broadcasts deletion via Mercure real-time hub.
      */
     protected function afterDelete(int|string|array $id): void
     {
-        Queue::push(BroadcastRealtimeJob::class, [
-            'topic' => 'chats',
-            'data' => [
-                'event' => 'chat_deleted',
-                'id'    => $id
-            ]
+        Realtime::publish('chats', [
+            'event' => 'chat_deleted',
+            'id'    => $id
         ]);
     }
 }
