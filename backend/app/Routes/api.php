@@ -104,6 +104,21 @@ $router->group(['prefix' => 'comments', 'middleware' => ['AuthMiddleware']], fun
 
 
 // ============================================================================
+// JOBS ROUTES
+// ============================================================================
+// Protected operations for jobs - requires authentication
+$router->group(['prefix' => 'jobs', 'middleware' => ['AuthMiddleware']], function ($router) {
+    $router->get('/', 'JobController@index');           // List jobs with pagination
+    $router->get('/all', 'JobController@all');         // Get all jobs
+    $router->get('/{id}', 'JobController@show');       // Get specific item
+    $router->post('/', 'JobController@store');         // Create new item
+    $router->put('/{id}', 'JobController@update');     // Update item
+    $router->delete('/{id}', 'JobController@destroy'); // Delete item
+});
+
+
+
+// ============================================================================
 // POST TAGS ROUTES
 // ============================================================================
 // Protected operations for post-tags - requires authentication
@@ -144,21 +159,6 @@ $router->group(['prefix' => 'tags', 'middleware' => ['AuthMiddleware']], functio
     $router->post('/', 'TagController@store');         // Create new item
     $router->put('/{id}', 'TagController@update');     // Update item
     $router->delete('/{id}', 'TagController@destroy'); // Delete item
-});
-
-
-
-// ============================================================================
-// JOBS ROUTES
-// ============================================================================
-// Protected operations for jobs - requires authentication
-$router->group(['prefix' => 'jobs', 'middleware' => ['AuthMiddleware']], function ($router) {
-    $router->get('/', 'JobController@index');           // List jobs with pagination
-    $router->get('/all', 'JobController@all');         // Get all jobs
-    $router->get('/{id}', 'JobController@show');       // Get specific item
-    $router->post('/', 'JobController@store');         // Create new item
-    $router->put('/{id}', 'JobController@update');     // Update item
-    $router->delete('/{id}', 'JobController@destroy'); // Delete item
 });
 
 
