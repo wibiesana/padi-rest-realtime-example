@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use App\Models\Base\Tag as BaseTag;
+use App\Models\Base\Chat as BaseChat;
 
-class Tag extends BaseTag
+class Chat extends BaseChat
 {
     /**
      * Override methods here to add custom logic.

@@ -10,7 +10,13 @@
             "name": "Get All PostTags (Paginated)",
             "request": {
                 "method": "GET",
-                "header": [],
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}",
+                        "type": "text"
+                    }
+                ],
                 "url": {
                     "raw": "{{base_url}}/post-tags?page=1&per-page=25",
                     "host": [
@@ -38,7 +44,13 @@
             "name": "Search PostTags",
             "request": {
                 "method": "GET",
-                "header": [],
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}",
+                        "type": "text"
+                    }
+                ],
                 "url": {
                     "raw": "{{base_url}}/post-tags?search=sample",
                     "host": [
@@ -62,7 +74,13 @@
             "name": "Get All PostTags (No Pagination)",
             "request": {
                 "method": "GET",
-                "header": [],
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}",
+                        "type": "text"
+                    }
+                ],
                 "url": {
                     "raw": "{{base_url}}/post-tags/all",
                     "host": [
@@ -81,7 +99,13 @@
             "name": "Get Single PostTag",
             "request": {
                 "method": "GET",
-                "header": [],
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}",
+                        "type": "text"
+                    }
+                ],
                 "url": {
                     "raw": "{{base_url}}/post-tags/1",
                     "host": [

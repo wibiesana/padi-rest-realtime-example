@@ -10,7 +10,13 @@
             "name": "Get All Posts (Paginated)",
             "request": {
                 "method": "GET",
-                "header": [],
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}",
+                        "type": "text"
+                    }
+                ],
                 "url": {
                     "raw": "{{base_url}}/posts?page=1&per-page=25",
                     "host": [
@@ -38,7 +44,13 @@
             "name": "Search Posts",
             "request": {
                 "method": "GET",
-                "header": [],
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}",
+                        "type": "text"
+                    }
+                ],
                 "url": {
                     "raw": "{{base_url}}/posts?search=sample",
                     "host": [
@@ -62,7 +74,13 @@
             "name": "Get All Posts (No Pagination)",
             "request": {
                 "method": "GET",
-                "header": [],
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}",
+                        "type": "text"
+                    }
+                ],
                 "url": {
                     "raw": "{{base_url}}/posts/all",
                     "host": [
@@ -81,7 +99,13 @@
             "name": "Get Single Post",
             "request": {
                 "method": "GET",
-                "header": [],
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}",
+                        "type": "text"
+                    }
+                ],
                 "url": {
                     "raw": "{{base_url}}/posts/1",
                     "host": [

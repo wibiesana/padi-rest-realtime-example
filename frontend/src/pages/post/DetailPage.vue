@@ -50,10 +50,23 @@
           </div>
           <h1 class="text-h3 text-weight-bold q-my-none text-primary">{{ post.title }}</h1>
           <div class="row items-center q-mt-sm text-grey-5 text-caption q-gutter-md">
-            <span
-              >Slug: <code>{{ post.slug }}</code></span
-            >
+            <span>Slug: <code>{{ post.slug }}</code></span>
             <span><q-icon name="visibility" class="q-mr-xs" />Views: {{ post.views || 0 }}</span>
+          </div>
+          
+          <!-- Post Tags Chips -->
+          <div class="row q-gutter-xs q-mt-md">
+            <q-chip
+              v-for="tag in getPostTags()"
+              :key="tag.id"
+              size="sm"
+              color="secondary"
+              text-color="white"
+              outline
+            >
+              <q-icon name="local_offer" size="14px" class="q-mr-xs" />
+              {{ tag.name }}
+            </q-chip>
           </div>
         </div>
 
@@ -177,6 +190,7 @@ import { storeToRefs } from 'pinia'
 import { useAuthStore } from 'src/stores/auth'
 import { usePostsStore } from 'src/stores/posts'
 import { useCommentsStore } from 'src/stores/comments'
+import { useTagsStore } from 'src/stores/tags'
 import { apiFetch } from 'src/lib/api'
 
 const route = useRoute()
@@ -184,11 +198,68 @@ const $q = useQuasar()
 const auth = useAuthStore()
 const postsStore = usePostsStore()
 const commentsStore = useCommentsStore()
+const tagsStore = useTagsStore()
 
 const { comments } = storeToRefs(commentsStore)
+const { tags } = storeToRefs(tagsStore)
 
 const post = ref(null)
 const loading = ref(true)
+
+// Post Tags local states
+const postTags = ref([])
+
+const fetchPostTags = async () => {
+  try {
+    const res = await apiFetch('/post-tags/all')
+    postTags.value = res.item || res || []
+  } catch (e) {
+    console.error('Failed to fetch post tags:', e)
+  }
+}
+
+let posttagsEventSource = null
+const connectPostTagsSSE = () => {
+  if (posttagsEventSource) {
+    posttagsEventSource.close()
+  }
+  const hubUrl = import.meta.env.VITE_MERCURE_URL || 'http://localhost:8085/.well-known/mercure'
+  const topic = encodeURIComponent('posttags')
+  posttagsEventSource = new EventSource(`${hubUrl}?topic=${topic}`)
+  posttagsEventSource.onmessage = (event) => {
+    try {
+      const payload = JSON.parse(event.data)
+      const { event: ev, data, id } = payload
+      if (ev === 'posttag_created') {
+        if (!postTags.value.some(pt => pt.id === data.id)) {
+          postTags.value.push(data)
+        }
+      } else if (ev === 'posttag_deleted') {
+        const rawId = id || data
+        const deletedId = parseInt(typeof rawId === 'object' && rawId !== null ? (rawId.id || rawId) : rawId)
+        const idx = postTags.value.findIndex(pt => pt.id === deletedId)
+        if (idx !== -1) {
+          postTags.value.splice(idx, 1)
+        }
+      }
+    } catch (e) {
+      console.error('Failed to parse posttag SSE message:', e)
+    }
+  }
+}
+
+const closePostTagsSSE = () => {
+  if (posttagsEventSource) {
+    posttagsEventSource.close()
+    posttagsEventSource = null
+  }
+}
+
+const getPostTags = () => {
+  if (!post.value) return []
+  const associations = postTags.value.filter((pt) => pt.post_id === post.value.id)
+  return associations.map((pt) => tags.value.find((t) => t.id === pt.tag_id)).filter((t) => !!t)
+}
 
 // Add comment state
 const newCommentText = ref('')
@@ -221,11 +292,17 @@ onMounted(() => {
   commentsStore.fetchComments()
   commentsStore.connectSSE()
   postsStore.connectSSE()
+  tagsStore.fetchTags()
+  tagsStore.connectSSE()
+  fetchPostTags()
+  connectPostTagsSSE()
 })
 
 onUnmounted(() => {
   commentsStore.closeSSE()
   postsStore.closeSSE()
+  tagsStore.closeSSE()
+  closePostTagsSSE()
 })
 
 // Listen to posts real-time updates to update page content if updated remotely

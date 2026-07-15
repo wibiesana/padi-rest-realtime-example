@@ -4,6 +4,7 @@ namespace App\Models\Base;
 
 use Wibiesana\Padi\Core\ActiveRecord;
 use Wibiesana\Padi\Core\ModelQuery;
+use Wibiesana\Padi\Core\Realtime;
 
 class PostTag extends ActiveRecord
 {
@@ -80,5 +81,31 @@ class PostTag extends ActiveRecord
             ->leftJoin('tags AS tags', 'post_tags.tag_id = tags.id')
             ->leftJoin('users AS users', 'post_tags.created_by = users.id')
             ->where($conditions);
+    }
+
+
+    /**
+     * Lifecycle Hook: Called after save (create/update)
+     * Automatically broadcasts changes via Mercure real-time hub.
+     */
+    protected function afterSave(bool $insert, array $data): void
+    {
+        $event = $insert ? 'posttag_created' : 'posttag_updated';
+        Realtime::publish('posttags', [
+            'event' => $event,
+            'data'  => $data
+        ]);
+    }
+
+    /**
+     * Lifecycle Hook: Called after delete
+     * Automatically broadcasts deletion via Mercure real-time hub.
+     */
+    protected function afterDelete(int|string|array $id): void
+    {
+        Realtime::publish('posttags', [
+            'event' => 'posttag_deleted',
+            'id'    => $id
+        ]);
     }
 }

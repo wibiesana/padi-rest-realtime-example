@@ -4,6 +4,7 @@ namespace App\Models\Base;
 
 use Wibiesana\Padi\Core\ActiveRecord;
 use Wibiesana\Padi\Core\ModelQuery;
+use Wibiesana\Padi\Core\Realtime;
 
 class Job extends ActiveRecord
 {
@@ -59,5 +60,31 @@ class Job extends ActiveRecord
             ->select("{$instance->table}.*")
             
             ->where($conditions);
+    }
+
+
+    /**
+     * Lifecycle Hook: Called after save (create/update)
+     * Automatically broadcasts changes via Mercure real-time hub.
+     */
+    protected function afterSave(bool $insert, array $data): void
+    {
+        $event = $insert ? 'job_created' : 'job_updated';
+        Realtime::publish('jobs', [
+            'event' => $event,
+            'data'  => $data
+        ]);
+    }
+
+    /**
+     * Lifecycle Hook: Called after delete
+     * Automatically broadcasts deletion via Mercure real-time hub.
+     */
+    protected function afterDelete(int|string|array $id): void
+    {
+        Realtime::publish('jobs', [
+            'event' => 'job_deleted',
+            'id'    => $id
+        ]);
     }
 }

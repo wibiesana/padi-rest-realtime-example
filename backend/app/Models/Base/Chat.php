@@ -6,13 +6,13 @@ use Wibiesana\Padi\Core\ActiveRecord;
 use Wibiesana\Padi\Core\ModelQuery;
 use Wibiesana\Padi\Core\Realtime;
 
-class Post extends ActiveRecord
+class Chat extends ActiveRecord
 {
-    protected string $table = 'posts';
+    protected string $table = 'chats';
     protected string|array $primaryKey = 'id';
     
     protected array $fillable = [
-        'user_id', 'title', 'slug', 'content', 'excerpt', 'featured_image', 'status', 'published_at', 'views'
+        'sender_id', 'receiver_id', 'message', 'is_read'
     ];
     
     protected array $hidden = [];
@@ -31,9 +31,14 @@ class Post extends ActiveRecord
     protected string $timestampFormat = 'datetime';
 
 
-    public function user()
+    public function sender()
     {
-        return $this->belongsTo(\App\Models\User::class, 'user_id');
+        return $this->belongsTo(\App\Models\User::class, 'sender_id');
+    }
+
+    public function receiver()
+    {
+        return $this->belongsTo(\App\Models\User::class, 'receiver_id');
     }
 
     public function createdBy()
@@ -44,16 +49,6 @@ class Post extends ActiveRecord
     public function updatedBy()
     {
         return $this->belongsTo(\App\Models\User::class, 'updated_by');
-    }
-
-    public function commentsBypost()
-    {
-        return $this->hasMany(\App\Models\Comment::class, 'post_id');
-    }
-
-    public function posttagBypost()
-    {
-        return $this->hasOne(\App\Models\PostTag::class, 'post_id');
     }
 
     /**
@@ -71,6 +66,7 @@ class Post extends ActiveRecord
 
             // Search in related tables
             $conditions[] = ['users.username', 'LIKE', $keyword];
+            $conditions[] = ['users_receiver_id.username', 'LIKE', $keyword];
             $conditions[] = ['users_created_by.username', 'LIKE', $keyword];
             $conditions[] = ['users_updated_by.username', 'LIKE', $keyword];
 
@@ -87,9 +83,10 @@ class Post extends ActiveRecord
 
         return static::find()
             ->select("{$instance->table}.*")
-            ->leftJoin('users AS users', 'posts.user_id = users.id')
-            ->leftJoin('users AS users_created_by', 'posts.created_by = users_created_by.id')
-            ->leftJoin('users AS users_updated_by', 'posts.updated_by = users_updated_by.id')
+            ->leftJoin('users AS users', 'chats.sender_id = users.id')
+            ->leftJoin('users AS users_receiver_id', 'chats.receiver_id = users_receiver_id.id')
+            ->leftJoin('users AS users_created_by', 'chats.created_by = users_created_by.id')
+            ->leftJoin('users AS users_updated_by', 'chats.updated_by = users_updated_by.id')
             ->where($conditions);
     }
 
@@ -100,8 +97,8 @@ class Post extends ActiveRecord
      */
     protected function afterSave(bool $insert, array $data): void
     {
-        $event = $insert ? 'post_created' : 'post_updated';
-        Realtime::publish('posts', [
+        $event = $insert ? 'chat_created' : 'chat_updated';
+        Realtime::publish('chats', [
             'event' => $event,
             'data'  => $data
         ]);
@@ -113,8 +110,8 @@ class Post extends ActiveRecord
      */
     protected function afterDelete(int|string|array $id): void
     {
-        Realtime::publish('posts', [
-            'event' => 'post_deleted',
+        Realtime::publish('chats', [
+            'event' => 'chat_deleted',
             'id'    => $id
         ]);
     }

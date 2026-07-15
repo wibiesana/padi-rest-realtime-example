@@ -18,18 +18,13 @@ const routes = [
         meta: { guestOnly: true }
       },
       {
-        path: 'comments',
-        component: () => import('pages/comment/IndexPage.vue'),
-        meta: { requiresAuth: true }
-      },
-      {
         path: 'posts/:id',
         component: () => import('pages/post/DetailPage.vue'),
         meta: { requiresAuth: true }
       },
       {
-        path: 'tags',
-        component: () => import('pages/tag/IndexPage.vue'),
+        path: 'chats',
+        component: () => import('pages/chat/IndexPage.vue'),
         meta: { requiresAuth: true }
       }
     ],

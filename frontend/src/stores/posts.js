@@ -131,7 +131,7 @@ export const usePostsStore = defineStore('posts', {
           ...postForm,
           user_id: authStore.user?.id
         }
-        await apiFetch('/posts', {
+        const res = await apiFetch('/posts', {
           method: 'POST',
           body: JSON.stringify(payload)
         })
@@ -140,14 +140,14 @@ export const usePostsStore = defineStore('posts', {
           message: 'Post created successfully',
           position: 'top-right'
         })
-        return true
+        return res.item || res
       } catch (e) {
         Notify.create({
           type: 'negative',
           message: e.message || 'Failed to create post',
           position: 'top-right'
         })
-        return false
+        return null
       } finally {
         this.saving = false
       }
@@ -161,7 +161,7 @@ export const usePostsStore = defineStore('posts', {
           ...postForm,
           user_id: authStore.user?.id
         }
-        await apiFetch(`/posts/${id}`, {
+        const res = await apiFetch(`/posts/${id}`, {
           method: 'PUT',
           body: JSON.stringify(payload)
         })
@@ -170,14 +170,14 @@ export const usePostsStore = defineStore('posts', {
           message: 'Post updated successfully',
           position: 'top-right'
         })
-        return true
+        return res.item || res
       } catch (e) {
         Notify.create({
           type: 'negative',
           message: e.message || 'Failed to update post',
           position: 'top-right'
         })
-        return false
+        return null
       } finally {
         this.saving = false
       }

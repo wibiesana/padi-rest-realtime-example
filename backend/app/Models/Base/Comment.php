@@ -4,6 +4,7 @@ namespace App\Models\Base;
 
 use Wibiesana\Padi\Core\ActiveRecord;
 use Wibiesana\Padi\Core\ModelQuery;
+use Wibiesana\Padi\Core\Realtime;
 
 class Comment extends ActiveRecord
 {
@@ -94,5 +95,31 @@ class Comment extends ActiveRecord
             ->leftJoin('users AS users_created_by', 'comments.created_by = users_created_by.id')
             ->leftJoin('users AS users_updated_by', 'comments.updated_by = users_updated_by.id')
             ->where($conditions);
+    }
+
+
+    /**
+     * Lifecycle Hook: Called after save (create/update)
+     * Automatically broadcasts changes via Mercure real-time hub.
+     */
+    protected function afterSave(bool $insert, array $data): void
+    {
+        $event = $insert ? 'comment_created' : 'comment_updated';
+        Realtime::publish('comments', [
+            'event' => $event,
+            'data'  => $data
+        ]);
+    }
+
+    /**
+     * Lifecycle Hook: Called after delete
+     * Automatically broadcasts deletion via Mercure real-time hub.
+     */
+    protected function afterDelete(int|string|array $id): void
+    {
+        Realtime::publish('comments', [
+            'event' => 'comment_deleted',
+            'id'    => $id
+        ]);
     }
 }

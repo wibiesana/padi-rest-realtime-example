@@ -89,6 +89,21 @@ $router->group(['prefix' => 'examples', 'middleware' => ['AuthMiddleware']], fun
 
 
 // ============================================================================
+// CHATS ROUTES
+// ============================================================================
+// Protected operations for chats - requires authentication
+$router->group(['prefix' => 'chats', 'middleware' => ['AuthMiddleware']], function ($router) {
+    $router->get('/', 'ChatController@index');           // List chats with pagination
+    $router->get('/all', 'ChatController@all');         // Get all chats
+    $router->get('/{id}', 'ChatController@show');       // Get specific item
+    $router->post('/', 'ChatController@store');         // Create new item
+    $router->put('/{id}', 'ChatController@update');     // Update item
+    $router->delete('/{id}', 'ChatController@destroy'); // Delete item
+});
+
+
+
+// ============================================================================
 // COMMENTS ROUTES
 // ============================================================================
 // Protected operations for comments - requires authentication
