@@ -63,7 +63,9 @@ To generate code/CRUD resources, execute this command inside the `backend/` dire
 php padi ga
 ```
 > [!IMPORTANT]
-> Make sure to select the **realtime** option when prompted during the code generation process.
+> * Make sure to select the **realtime** option when prompted during the code generation process.
+> * If you choose to use a queue, make sure to run `init_queue.bat` to process background jobs.
+>   * *Note: Using a database-backed queue may feel slower, whereas configuring it to use Redis will provide high performance and faster updates.*
 
 ### Step 4: Start the Web Server (FrankenPHP)
 In the project's root directory, double-click or run one of the batch scripts to launch the FrankenPHP web server with Mercure:
