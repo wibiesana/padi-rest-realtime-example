@@ -17,7 +17,7 @@ This application is a high-performance, real-time reactive application demo buil
 
 ### Backend
 * **[PADI MVC Framework](https://padisoftware.my.id/)** (PHP 8.4+)
-* **FrankenPHP** (Modern Go-based PHP application server with built-in Mercure Hub support)
+* **[FrankenPHP](https://frankenphp.dev/)** (Modern Go-based PHP application server with built-in Mercure Hub support)
 * **Mercure Hub** (SSE protocol for real-time publishing)
 * **MySQL / MariaDB / SQLite** (Main relational database)
 
@@ -31,7 +31,7 @@ This application is a high-performance, real-time reactive application demo buil
 
 ## 📋 System Prerequisites
 Ensure you have the following installed on your machine:
-1. **PHP 8.4 or higher**
+1. **PHP 8.4 or higher** (Optional for running the web server as FrankenPHP has a built-in PHP interpreter, but required for executing local CLI commands like `php padi migrate` directly).
 2. **Composer**
 3. **Node.js** (LTS / v18+)
 4. **FrankenPHP** (Installed on system or present in PATH)

@@ -17,7 +17,7 @@ Aplikasi ini adalah demo aplikasi reaktif real-time berkinerja tinggi yang diban
 
 ### Backend
 * **[PADI MVC Framework](https://padisoftware.my.id/)** (PHP 8.4+)
-* **FrankenPHP** (Server Web modern berbasis Go dengan dukungan Mercure Hub bawaan)
+* **[FrankenPHP](https://frankenphp.dev/)** (Server Web modern berbasis Go dengan dukungan Mercure Hub bawaan)
 * **Mercure Hub** (Protokol SSE untuk real-time update)
 * **MySQL / MariaDB / SQLite** (Sebagai penyimpanan data utama)
 
@@ -31,7 +31,7 @@ Aplikasi ini adalah demo aplikasi reaktif real-time berkinerja tinggi yang diban
 
 ## 📋 Prasyarat Sistem
 Pastikan komputer Anda sudah terinstal:
-1. **PHP 8.4 atau lebih tinggi**
+1. **PHP 8.4 atau lebih tinggi** (Opsional untuk menjalankan web server karena FrankenPHP sudah menyertakan PHP bawaan, tetapi diperlukan jika Anda ingin menjalankan perintah CLI lokal seperti `php padi migrate` secara langsung).
 2. **Composer**
 3. **Node.js** (LTS / v18+)
 4. **FrankenPHP** (Sudah terpasang di sistem atau berada di PATH)
