@@ -4,7 +4,8 @@ namespace App\Models\Base;
 
 use Wibiesana\Padi\Core\ActiveRecord;
 use Wibiesana\Padi\Core\ModelQuery;
-use Wibiesana\Padi\Core\Realtime;
+use Wibiesana\Padi\Core\Queue;
+use App\Jobs\BroadcastRealtimeJob;
 
 class Post extends ActiveRecord
 {
@@ -96,26 +97,32 @@ class Post extends ActiveRecord
 
     /**
      * Lifecycle Hook: Called after save (create/update)
-     * Automatically broadcasts changes via Mercure real-time hub.
+     * Automatically broadcasts changes via background queue.
      */
     protected function afterSave(bool $insert, array $data): void
     {
         $event = $insert ? 'post_created' : 'post_updated';
-        Realtime::publish('posts', [
-            'event' => $event,
-            'data'  => $data
+        Queue::push(BroadcastRealtimeJob::class, [
+            'topic' => 'posts',
+            'data' => [
+                'event' => $event,
+                'data'  => $data
+            ]
         ]);
     }
 
     /**
      * Lifecycle Hook: Called after delete
-     * Automatically broadcasts deletion via Mercure real-time hub.
+     * Automatically broadcasts deletion via background queue.
      */
     protected function afterDelete(int|string|array $id): void
     {
-        Realtime::publish('posts', [
-            'event' => 'post_deleted',
-            'id'    => $id
+        Queue::push(BroadcastRealtimeJob::class, [
+            'topic' => 'posts',
+            'data' => [
+                'event' => 'post_deleted',
+                'id'    => $id
+            ]
         ]);
     }
 }

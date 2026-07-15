@@ -15,8 +15,8 @@
         />
 
         <!-- App Logo & Title -->
-        <q-avatar size="32px" color="primary" text-color="white" class="shadow-glow q-mr-sm">
-          <q-icon name="bolt" size="20px" />
+        <q-avatar size="32px" class="shadow-glow q-mr-sm">
+          <img src="icons/favicon-128x128.png">
         </q-avatar>
         <q-toolbar-title class="text-weight-bold text-h6 tracking-wide bg-gradient-text-logo">
           PADI Real-time

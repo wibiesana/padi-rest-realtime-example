@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "45e832f3c182405ffcded73e8477e24d",
+    "content-hash": "4571726fb4dbc2a169eb39c85ff54175",
     "packages": [
         {
             "name": "firebase/php-jwt",
@@ -74,16 +74,16 @@
         },
         {
             "name": "wibiesana/padi-core",
-            "version": "2.0.13",
+            "version": "2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wibiesana/padi_core.git",
-                "reference": "b4c07c244a27563dc9806e83f6f3d6ddd00bcf27"
+                "reference": "8620e2b11ef62896bbb05113cfe4e31957e05cc2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wibiesana/padi_core/zipball/b4c07c244a27563dc9806e83f6f3d6ddd00bcf27",
-                "reference": "b4c07c244a27563dc9806e83f6f3d6ddd00bcf27",
+                "url": "https://api.github.com/repos/wibiesana/padi_core/zipball/8620e2b11ef62896bbb05113cfe4e31957e05cc2",
+                "reference": "8620e2b11ef62896bbb05113cfe4e31957e05cc2",
                 "shasum": ""
             },
             "require": {
@@ -114,9 +114,9 @@
             "description": "Core engine for Padi REST API Framework",
             "support": {
                 "issues": "https://github.com/wibiesana/padi_core/issues",
-                "source": "https://github.com/wibiesana/padi_core/tree/2.0.13"
+                "source": "https://github.com/wibiesana/padi_core/tree/2.1.0"
             },
-            "time": "2026-07-13T05:16:51+00:00"
+            "time": "2026-07-15T15:09:41+00:00"
         }
     ],
     "packages-dev": [

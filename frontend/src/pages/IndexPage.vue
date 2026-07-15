@@ -4,8 +4,8 @@
       <!-- HERO HEADER -->
       <div class="q-mb-xl">
         <div class="logo-wrapper q-mb-md">
-          <q-avatar size="80px" color="primary" text-color="white" class="shadow-glow">
-            <q-icon name="bolt" size="48px" />
+          <q-avatar size="80px" class="shadow-glow">
+            <img src="icons/favicon-128x128.png">
           </q-avatar>
         </div>
         <h1 class="text-h2 text-weight-bold bg-gradient-text q-my-none">PADI Framework</h1>
