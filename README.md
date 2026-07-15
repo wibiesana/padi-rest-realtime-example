@@ -78,6 +78,13 @@ In the project's root directory, double-click or run one of the batch scripts to
 If you configure backend models to use background queue instead of Direct Mode for broadcasting real-time updates:
 Run the `init_queue.bat` script in the root directory to process database jobs in the background.
 
+#### 📊 Queue Driver Comparison (Database vs Redis)
+
+| Queue Driver | Performance | Pros (Kelebihan) | Cons (Kekurangan) |
+| :--- | :--- | :--- | :--- |
+| **Database** (Default) | ⚠️ **Slow / Delayed** (High disk I/O and polling query overhead) | Easy setup (uses existing DB), persistent storage by default. | Slower response times, increases database CPU/disk load, polling overhead. |
+| **Redis** | 🚀 **Instant / Fast** (In-memory operations, push/pop notifications) | Sub-millisecond latency, handles massive scale, offloads database workload. | Requires installing and running a Redis server/service. |
+
 ### Step 6: Setup & Start the Frontend
 1. Open a new terminal and navigate to the `frontend/` directory.
 2. Install all Node.js dependencies:
