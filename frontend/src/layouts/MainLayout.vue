@@ -45,6 +45,19 @@
             </q-list>
           </q-btn-dropdown>
 
+          <!-- Login Link -->
+          <q-btn
+            v-if="!auth.token"
+            flat
+            dense
+            no-caps
+            color="white"
+            :label="t('nav.signIn')"
+            icon="login"
+            to="/login"
+            class="hover-glow-btn"
+          />
+
           <!-- User Information & Profile Dropdown -->
           <div
             v-if="auth.token"
