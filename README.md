@@ -57,18 +57,26 @@ If you did **not** select the option to run migrations during the `php padi init
 php padi migrate
 ```
 
-### Step 3: Start the Web Server (FrankenPHP)
-In the main root directory (`coba-realtime/`), double-click or run one of the batch scripts to launch the FrankenPHP web server with Mercure:
+### Step 3: Generate Code (Optional)
+To generate code/CRUD resources, execute this command inside the `backend/` directory:
+```bash
+php padi ga
+```
+> [!IMPORTANT]
+> Make sure to select the **realtime** option when prompted during the code generation process.
+
+### Step 4: Start the Web Server (FrankenPHP)
+In the project's root directory, double-click or run one of the batch scripts to launch the FrankenPHP web server with Mercure:
 * **Normal Mode**: Run `init_frankenphp_normal_mode.bat`.
 * **Worker Mode (High Performance)**: Run `init_frankenphp_worker_mode.bat`.
 
 *The backend API will be available at: `http://localhost:8085`*
 
-### Step 4: Run the Queue Worker (Optional)
+### Step 5: Run the Queue Worker (Optional)
 If you configure backend models to use background queue instead of Direct Mode for broadcasting real-time updates:
 Run the `init_queue.bat` script in the root directory to process database jobs in the background.
 
-### Step 5: Setup & Start the Frontend
+### Step 6: Setup & Start the Frontend
 1. Open a new terminal and navigate to the `frontend/` directory.
 2. Install all Node.js dependencies:
    ```bash

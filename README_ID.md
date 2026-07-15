@@ -57,18 +57,26 @@ Jika Anda **belum** memilih opsi untuk menjalankan migrasi database saat menjala
 php padi migrate
 ```
 
-### Langkah 3: Jalankan Web Server (FrankenPHP)
-Di direktori root project utama (`coba-realtime/`), Anda dapat langsung menjalankan file batch untuk mengaktifkan server web FrankenPHP beserta Mercure Hub:
+### Langkah 3: Generate Code (Opsional)
+Untuk men-generate code/resource CRUD, jalankan perintah berikut di dalam direktori `backend/`:
+```bash
+php padi ga
+```
+> [!IMPORTANT]
+> Pastikan Anda memilih opsi **realtime** saat diminta selama proses generate code.
+
+### Langkah 4: Jalankan Web Server (FrankenPHP)
+Di direktori root project utama, Anda dapat langsung menjalankan file batch untuk mengaktifkan server web FrankenPHP beserta Mercure Hub:
 * **Mode Normal**: Jalankan file `init_frankenphp_normal_mode.bat`.
 * **Mode Worker (Performa Tinggi)**: Jalankan file `init_frankenphp_worker_mode.bat`.
 
 *Server backend kini dapat diakses di: `http://localhost:8085`*
 
-### Langkah 4: Jalankan Queue Worker (Opsional)
+### Langkah 5: Jalankan Queue Worker (Opsional)
 Jika Anda mengonfigurasi model aplikasi di backend untuk menggunakan antrean (Queue) alih-alih metode Direct untuk memproses broadcast real-time:
 Jalankan file batch `init_queue.bat` di root direktori untuk memproses pekerjaan di latar belakang.
 
-### Langkah 5: Setup & Jalankan Frontend
+### Langkah 6: Setup & Jalankan Frontend
 1. Buka terminal baru dan masuk ke direktori `frontend/`.
 2. Instal semua dependensi Node.js:
    ```bash
