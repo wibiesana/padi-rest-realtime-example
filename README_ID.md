@@ -16,7 +16,7 @@ Aplikasi ini adalah demo aplikasi reaktif real-time berkinerja tinggi yang diban
 ## 🛠️ Tumpukan Teknologi (Tech Stack)
 
 ### Backend
-* **PADI MVC Framework** (PHP 8.4+)
+* **[PADI MVC Framework](https://padisoftware.my.id/)** (PHP 8.4+)
 * **FrankenPHP** (Server Web modern berbasis Go dengan dukungan Mercure Hub bawaan)
 * **Mercure Hub** (Protokol SSE untuk real-time update)
 * **MySQL / MariaDB / SQLite** (Sebagai penyimpanan data utama)

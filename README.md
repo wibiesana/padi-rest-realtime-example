@@ -16,7 +16,7 @@ This application is a high-performance, real-time reactive application demo buil
 ## 🛠️ Tech Stack
 
 ### Backend
-* **PADI MVC Framework** (PHP 8.4+)
+* **[PADI MVC Framework](https://padisoftware.my.id/)** (PHP 8.4+)
 * **FrankenPHP** (Modern Go-based PHP application server with built-in Mercure Hub support)
 * **Mercure Hub** (SSE protocol for real-time publishing)
 * **MySQL / MariaDB / SQLite** (Main relational database)
